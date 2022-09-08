@@ -1,5 +1,3 @@
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 // import '../core/configs/app_configuration.dart';
 // import '../core/device/background_service.dart';
 // import '../core/device/connectivity_service.dart';

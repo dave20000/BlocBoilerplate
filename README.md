@@ -5,7 +5,8 @@ A starting boilerplate project for flutter using riverpod.
 ## Boilerplate feature
 
 - Follows Clean Architecture
-- Riverpod State Management (used for service dependency injection as well) and Flutter Hooks
+- Bloc and Cubit State Management and Flutter Hook
+- Injectable and GetIt for Dependency Injection
 - Testing (Unit and Widget Testing, Mocking Data)
 - Api Client (using dio)
 - Cache Client (using hive)
