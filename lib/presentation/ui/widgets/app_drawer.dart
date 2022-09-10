@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/injector/di.dart';
@@ -11,7 +12,7 @@ import '../../cubits/core/user_cubit.dart';
 import '../hooks/app_loc_hook.dart';
 import '../hooks/is_dark_mode_hook.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends HookWidget {
   const AppDrawer({super.key});
 
   @override

@@ -76,9 +76,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i20.WriteOnboarding(get<_i16.SecureStorageManager>()));
   gh.factory<_i21.WriteTheme>(
       () => _i21.WriteTheme(get<_i16.SecureStorageManager>()));
-  gh.factoryParam<_i22.ApiManager, String, dynamic>((baseUrl, _) =>
-      _i23.ApiManagerImpl(baseUrl, get<_i12.LoggerService>(),
-          get<_i16.SecureStorageManager>()));
+  gh.factory<_i22.ApiManager>(() => _i23.ApiManagerImpl(
+      get<_i12.LoggerService>(), get<_i16.SecureStorageManager>()));
   gh.factory<_i24.FilePickerService>(
       () => _i24.FilePickerService(get<_i14.PermissionService>()));
   gh.factory<_i20.ReadOnboarding>(

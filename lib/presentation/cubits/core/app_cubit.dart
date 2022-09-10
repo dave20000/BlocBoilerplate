@@ -32,28 +32,28 @@ class AppCubit extends Cubit<AppState> {
   }
 
   Future<void> _init() async {
-    final isOnboardingDone = await _readOnboardingUseCase();
+    // final isOnboardingDone = await _readOnboardingUseCase();
 
-    if (isOnboardingDone) {
-      // final jwt = await _readJwtUseCase();
-      // if (jwt != null) {
-      final userState = await _readUserUseCase();
-      userState.when(
-        available: (user) {
-          //? is state authenticated and want to do some background task
-          // await _read(backgroundServiceProvider).registerPeriodicTask(
-          //   "periodicTask",
-          //   BackgroundService.periodicTask,
-          // );
-          emit(AppState.authenticated(user));
-        },
-        notAvailable: () {
-          emit(const AppState.unAuthenticated());
-        },
-      );
-    } else {
-      emit(const AppState.unAuthenticated());
-    }
+    // if (isOnboardingDone) {
+    // final jwt = await _readJwtUseCase();
+    // if (jwt != null) {
+    final userState = await _readUserUseCase();
+    userState.when(
+      available: (user) {
+        //? is state authenticated and want to do some background task
+        // await _read(backgroundServiceProvider).registerPeriodicTask(
+        //   "periodicTask",
+        //   BackgroundService.periodicTask,
+        // );
+        emit(AppState.authenticated(user));
+      },
+      notAvailable: () {
+        emit(const AppState.unAuthenticated());
+      },
+    );
+    // } else {
+    //   emit(const AppState.unAuthenticated());
+    // }
     // } else {
     //   state = const AppState.onboarding();
     // }
@@ -72,7 +72,9 @@ class AppCubit extends Cubit<AppState> {
   }
 
   Future<void> authenticateState(User user) async {
-    emit(const AppState.unAuthenticated());
+    print(state);
+    emit(AppState.authenticated(user));
+    print(state);
   }
 
   Future<void> unAuthenticateState() async {

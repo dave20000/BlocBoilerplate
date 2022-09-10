@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/configs/app_configuration.dart';
 import '../../../../core/configs/app_serializers.dart';
 import '../../../../core/device/connectivity_service.dart';
 import '../../../../core/device/logger_service.dart';
@@ -24,12 +25,12 @@ class ApiManagerImpl extends ApiManager {
   late Dio _dio;
 
   ApiManagerImpl(
-    @factoryParam String baseUrl,
+    // @factoryParam String baseUrl,
     this._loggerService,
     this._secureStorageManager,
   ) {
     final BaseOptions options = BaseOptions(
-      baseUrl: baseUrl,
+      baseUrl: AppConfiguration.baseUrl,
       connectTimeout: 50000,
       receiveTimeout: 50000,
     );

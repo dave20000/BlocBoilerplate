@@ -1,13 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../../core/injector/di.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/styles/colors.dart';
 import '../../hooks/is_dark_mode_hook.dart';
 
-class CloseButtonBottomSheet extends StatelessWidget {
+class CloseButtonBottomSheet extends HookWidget {
   final Widget child;
   final Animation<double> animation;
 

@@ -16,26 +16,26 @@ abstract class ToastFactory {
     const int seconds = 2;
     final FToast fToast = FToast().init(context);
     fToast
-      ..removeCustomToast()
-      ..showToast(
-        child: MessageToast(
-          message: message,
-          toastType: toastType,
-          onDismiss: () {
-            fToast.removeCustomToast();
-          },
-          seconds: seconds,
-          title: title,
-        ),
-        positionedToastBuilder: (context, child) {
-          return Positioned(
-            top: 40.0,
-            left: 24.0,
-            right: 24.0,
-            child: child,
-          );
+        // ..removeCustomToast()
+        .showToast(
+      child: MessageToast(
+        message: message,
+        toastType: toastType,
+        onDismiss: () {
+          fToast.removeCustomToast();
         },
-        toastDuration: const Duration(seconds: seconds),
-      );
+        seconds: seconds,
+        title: title,
+      ),
+      positionedToastBuilder: (context, child) {
+        return Positioned(
+          top: 40.0,
+          left: 24.0,
+          right: 24.0,
+          child: child,
+        );
+      },
+      toastDuration: const Duration(seconds: seconds),
+    );
   }
 }
