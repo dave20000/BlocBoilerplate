@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../../../core/injector/di.dart';
 import '../../../../../core/router/app_router.dart';
 import '../../../../../core/utils/styles/ui_helper.dart';
 import '../../../../cubits/home/home_cubit.dart';
+import '../../../hooks/is_dark_mode_hook.dart';
 import '../../../widgets/buttons/primary_button.dart';
 import '../../../widgets/buttons/secondary_outlined_button.dart';
 
-class LogoutBottomSheet extends StatelessWidget {
+class LogoutBottomSheet extends HookWidget {
   const LogoutBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bool isDarkMode =
-        Theme.of(context).colorScheme.brightness == Brightness.dark;
+    final bool isDarkMode = useIsDarkHook();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       decoration: BoxDecoration(

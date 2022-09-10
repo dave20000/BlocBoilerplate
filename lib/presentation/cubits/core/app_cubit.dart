@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:injectable/injectable.dart';
 
 import '../../../core/device/background_service.dart';
 import '../../../domain/models/user/user.dart';
@@ -9,7 +8,6 @@ import '../../../domain/states/core/app/app_state.dart';
 import '../../../domain/usecases/storage/onboarding/onboarding_usecases.dart';
 import '../../../domain/usecases/user/user_usecases.dart';
 
-@injectable
 class AppCubit extends Cubit<AppState> {
   AppState get currentState => state;
   set currentState(AppState appState) {
@@ -18,6 +16,7 @@ class AppCubit extends Cubit<AppState> {
 
   final ReadUser _readUserUseCase;
   // late final ReadJwt _readJwtUseCase = _read(readJwtTokenUseCaseProvider);
+  // ignore: unused_field
   final ReadOnboarding _readOnboardingUseCase;
   final WriteOnboarding _writeOnboardingUseCase;
   final BackgroundService _backgroundService;
@@ -72,9 +71,7 @@ class AppCubit extends Cubit<AppState> {
   }
 
   Future<void> authenticateState(User user) async {
-    print(state);
     emit(AppState.authenticated(user));
-    print(state);
   }
 
   Future<void> unAuthenticateState() async {

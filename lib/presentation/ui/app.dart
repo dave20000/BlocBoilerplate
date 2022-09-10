@@ -4,22 +4,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../core/configs/router_log.dart';
+import '../../core/device/background_service.dart';
 import '../../core/device/logger_service.dart';
 import '../../core/injector/di.dart';
 import '../../core/router/app_router.dart';
 import '../../core/utils/l10n/app_loc.dart';
-import '../../domain/enums/account_type.dart';
-import '../../domain/enums/toast_type.dart';
-import '../../domain/models/user/user.dart';
 import '../../domain/states/core/app/app_state.dart';
 import '../../domain/states/user/user_state.dart';
+import '../../domain/usecases/auth/auth_usecases.dart';
+import '../../domain/usecases/storage/onboarding/onboarding_usecases.dart';
 import '../../domain/usecases/user/user_usecases.dart';
 import '../cubits/core/app_cubit.dart';
 import '../cubits/core/theme_cubit.dart';
 import '../cubits/core/user_cubit.dart';
 import '../cubits/home/home_cubit.dart';
 import '../cubits/login/login_cubit.dart';
-import 'modals/toasts/toast_factory.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -36,64 +35,76 @@ class App extends StatelessWidget {
           create: (_) => DI.resolve<ThemeCubit>(),
         ),
         BlocProvider(
-          create: (_) => DI.resolve<AppCubit>(),
-        ),
-        BlocProvider(
-          create: (_) => DI.resolve<LoginCubit>(),
-        ),
-        BlocProvider(
-          create: (_) => DI.resolve<HomeCubit>(),
+          create: (_) => AppCubit(
+            GetIt.I<ReadUser>(),
+            GetIt.I<ReadOnboarding>(),
+            GetIt.I<WriteOnboarding>(),
+            GetIt.I<BackgroundService>(),
+          ),
         ),
       ],
-      child: BlocConsumer<AppCubit, AppState>(
-        listener: (context, state) {
-          if (state ==
-              const AppState.authenticated(
-                User(
-                  name: "Guest User",
-                  accountType: AccountType.guest,
-                ),
-              )) {
-            ToastFactory.showToast(
-              context,
-              ToastType.success,
-              "Logged In",
-            );
-          }
-        },
+      child: BlocBuilder<AppCubit, AppState>(
         builder: (context, state) {
           return BlocProvider(
-            create: (ctx) {
-              return UserCubit(
-                GetIt.instance<UpdateUser>(),
-                context.watch<AppCubit>().state.maybeWhen(
-                      orElse: () => const UserState.notAvailable(),
-                      authenticated: (user) => UserState.available(user),
-                    ),
-              );
-            },
-            child: ScreenUtilInit(
-              designSize: const Size(375, 812),
-              minTextAdapt: true,
-              splitScreenMode: true,
-              builder: (context, child) {
-                return MaterialApp.router(
-                  routeInformationParser: appRouter.defaultRouteParser(),
-                  routerDelegate: appRouter.delegate(
-                    navigatorObservers: () => [
-                      RouterLog(loggerService),
-                    ],
-                  ),
-                  // locale: localLanguage,
-                  supportedLocales: AppLoc.supportedLocale,
-                  localizationsDelegates: AppLoc.delegates,
-                  title: "Boilerplate Bloc",
-                  debugShowCheckedModeBanner: false,
-                  themeMode: context.watch<ThemeCubit>().state.mode,
-                  theme: context.read<ThemeCubit>().lightThemeData,
-                  darkTheme: context.read<ThemeCubit>().darkThemeData,
-                );
+            create: (ctx) => UserCubit(
+              GetIt.instance<UpdateUser>(),
+            ),
+            child: BlocListener<AppCubit, AppState>(
+              listener: (context, state) {
+                context.read<UserCubit>().init(
+                      state.maybeWhen(
+                        orElse: () => const UserState.notAvailable(),
+                        authenticated: (user) => UserState.available(user),
+                      ),
+                    );
               },
+              child: BlocBuilder<UserCubit, UserState>(
+                builder: (context, state) {
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (context) => LoginCubit(
+                          GetIt.I<LoginUser>(),
+                          context.read<AppCubit>(),
+                          GetIt.I<LoggerService>(),
+                        ),
+                      ),
+                      BlocProvider(
+                        create: (ctx) => HomeCubit(
+                          GetIt.I<LogoutUser>(),
+                          context.read<UserCubit>(),
+                          context.read<AppCubit>(),
+                          GetIt.I<LoggerService>(),
+                        ),
+                      ),
+                    ],
+                    child: ScreenUtilInit(
+                      designSize: const Size(375, 812),
+                      minTextAdapt: true,
+                      splitScreenMode: true,
+                      builder: (context, child) {
+                        return MaterialApp.router(
+                          routeInformationParser:
+                              appRouter.defaultRouteParser(),
+                          routerDelegate: appRouter.delegate(
+                            navigatorObservers: () => [
+                              RouterLog(loggerService),
+                            ],
+                          ),
+                          // locale: localLanguage,
+                          supportedLocales: AppLoc.supportedLocale,
+                          localizationsDelegates: AppLoc.delegates,
+                          title: "Boilerplate Bloc",
+                          debugShowCheckedModeBanner: false,
+                          themeMode: context.watch<ThemeCubit>().state.mode,
+                          theme: context.read<ThemeCubit>().lightThemeData,
+                          darkTheme: context.read<ThemeCubit>().darkThemeData,
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
           );
         },

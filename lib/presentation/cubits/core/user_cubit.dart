@@ -1,22 +1,21 @@
 import 'package:bloc/bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:injectable/injectable.dart';
 
 import '../../../domain/states/user/user_state.dart';
 import '../../../domain/usecases/user/user_usecases.dart';
 
-@injectable
 class UserCubit extends Cubit<UserState> {
   final UpdateUser _updateUserUseCase;
 
   UserCubit(
     this._updateUserUseCase,
-    @factoryParam UserState userState,
-  ) : super(userState) {
-    _init();
+  ) : super(const UserState.notAvailable()) {
+    // _init();
   }
 
-  Future<void> _init() async {}
+  Future<void> init(UserState userState) async {
+    emit(userState);
+  }
 
   Future<void> updateUserImage(String path) async {
     if (state.user != null) {
