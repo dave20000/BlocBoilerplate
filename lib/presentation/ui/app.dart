@@ -13,6 +13,7 @@ import '../../domain/states/core/app/app_state.dart';
 import '../../domain/states/user/user_state.dart';
 import '../../domain/usecases/auth/auth_usecases.dart';
 import '../../domain/usecases/storage/onboarding/onboarding_usecases.dart';
+import '../../domain/usecases/storage/theme/theme_storage_usecases.dart';
 import '../../domain/usecases/user/user_usecases.dart';
 import '../cubits/core/app_cubit.dart';
 import '../cubits/core/theme_cubit.dart';
@@ -32,7 +33,10 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => DI.resolve<ThemeCubit>(),
+          create: (_) => ThemeCubit(
+            GetIt.I<ReadTheme>(),
+            GetIt.I<WriteTheme>(),
+          ),
         ),
         BlocProvider(
           create: (_) => AppCubit(
@@ -47,7 +51,7 @@ class App extends StatelessWidget {
         builder: (context, state) {
           return BlocProvider(
             create: (ctx) => UserCubit(
-              GetIt.instance<UpdateUser>(),
+              GetIt.I<UpdateUser>(),
             ),
             child: BlocListener<AppCubit, AppState>(
               listener: (context, state) {
