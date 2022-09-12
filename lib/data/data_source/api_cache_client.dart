@@ -14,7 +14,7 @@ import 'api/api_manager/api_manager.dart';
 import 'local/cache/cache_manager.dart';
 
 //TODO: Add Support for editing of data in offline mode use SyncModel concept
-@injectable
+@Singleton()
 class ApiCacheClient {
   final ApiManager _apiManager;
   final CacheManager _cachingManager;

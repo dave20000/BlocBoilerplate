@@ -1,7 +1,6 @@
 import 'package:f_logs/constants/db_constants.dart';
 import 'package:f_logs/model/flog/flog.dart';
 import 'package:f_logs/model/flog/log.dart';
-import 'package:f_logs/model/flog/log_level.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sembast/sembast.dart';
 
@@ -9,49 +8,12 @@ import '../configs/constants/app_constants.dart';
 
 @injectable
 class LoggerService {
-  void logException(Exception e, StackTrace stackTrace, LogLevel logLevel) {
-    switch (logLevel) {
-      case LogLevel.ERROR:
-        FLog.error(
-          text: AppConstants.exception,
-          exception: e,
-          stacktrace: stackTrace,
-        );
-        break;
-      case LogLevel.INFO:
-        FLog.info(
-          text: AppConstants.exception,
-          exception: e,
-          stacktrace: stackTrace,
-        );
-        break;
-      case LogLevel.FATAL:
-        FLog.fatal(
-          text: AppConstants.exception,
-          exception: e,
-          stacktrace: stackTrace,
-        );
-        break;
-      case LogLevel.WARNING:
-        FLog.warning(
-          text: AppConstants.exception,
-          exception: e,
-          stacktrace: stackTrace,
-        );
-        break;
-      case LogLevel.ALL:
-      case LogLevel.TRACE:
-      case LogLevel.DEBUG:
-      case LogLevel.SEVERE:
-      case LogLevel.OFF:
-        FLog.logThis(
-          type: logLevel,
-          text: AppConstants.exception,
-          exception: e,
-          stacktrace: stackTrace,
-        );
-        break;
-    }
+  void logException(dynamic e, StackTrace stackTrace) {
+    FLog.error(
+      text: AppConstants.exception,
+      exception: e,
+      stacktrace: stackTrace,
+    );
   }
 
   void logDebug(String text, {String? className, String? methodName}) {

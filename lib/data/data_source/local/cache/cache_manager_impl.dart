@@ -12,7 +12,7 @@ import '../secure_storage/secure_storage_manager.dart';
 import '../secure_storage/secure_storage_manager_impl.dart';
 import 'cache_manager.dart';
 
-@Injectable(as: CacheManager)
+@Singleton(as: CacheManager)
 class CacheManagerImpl implements CacheManager {
   static final HiveInterface _hive = Hive;
 

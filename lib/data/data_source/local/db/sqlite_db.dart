@@ -10,7 +10,7 @@ import 'package:sqflite/sqflite.dart';
 
 import '../../../../core/configs/constants/db_constants.dart';
 
-@injectable
+@Singleton()
 class SQLiteDb {
   // only have a single app-wide reference to the database
   static Database? _database;

@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 
 import 'secure_storage_manager.dart';
 
-@Injectable(as: SecureStorageManager)
+@Singleton(as: SecureStorageManager)
 class SecureStorageManagerImpl implements SecureStorageManager {
   late final FlutterSecureStorage _secureStorage;
 

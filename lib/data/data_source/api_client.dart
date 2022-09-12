@@ -8,7 +8,7 @@ import '../mappers/ui_model.dart';
 import '../models/result/data_state.dart';
 import 'api/api_manager/api_manager.dart';
 
-@injectable
+@Singleton()
 class ApiClient {
   final ApiManager _apiManager;
   ApiClient(this._apiManager);

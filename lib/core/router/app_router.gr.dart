@@ -18,7 +18,7 @@ class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     AppStartRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
+      return AdaptivePage<dynamic>(
           routeData: routeData, child: const AppStartScreen());
     },
     LogoutBottomSheetRoute.name: (routeData) {

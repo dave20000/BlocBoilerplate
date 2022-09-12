@@ -7,7 +7,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 //TODO: Add adapters for other types in configure function
-@injectable
+@Singleton()
 class HiveDb {
   // ignore: avoid_void_async
   static Future<void> initialize() async {

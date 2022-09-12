@@ -1,9 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:injectable/injectable.dart';
 
+import '../../../domain/models/user/user.dart';
 import '../../../domain/states/user/user_state.dart';
 import '../../../domain/usecases/user/user_usecases.dart';
 
+@injectable
 class UserCubit extends Cubit<UserState> {
   final UpdateUser _updateUserUseCase;
 
@@ -13,8 +16,12 @@ class UserCubit extends Cubit<UserState> {
     // _init();
   }
 
-  Future<void> init(UserState userState) async {
-    emit(userState);
+  Future<void> userNotAvailable() async {
+    emit(const UserState.notAvailable());
+  }
+
+  Future<void> userAvailable(User user) async {
+    emit(UserState.available(user));
   }
 
   Future<void> updateUserImage(String path) async {

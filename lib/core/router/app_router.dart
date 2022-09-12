@@ -8,10 +8,14 @@ import '../../presentation/ui/screens/app_start_screen.dart';
 
 part 'app_router.gr.dart';
 
-@MaterialAutoRouter(
+@AdaptiveAutoRouter(
   replaceInRouteName: 'Screen,Route',
   routes: <AutoRoute>[
-    AutoRoute(page: AppStartScreen, initial: true),
+    AutoRoute(
+      page: AppStartScreen,
+      initial: true,
+      children: [],
+    ),
     CustomRoute(
       name: 'LogoutBottomSheetRoute',
       page: LogoutBottomSheet,

@@ -13,12 +13,5 @@ class DI {
   Future<void> setupInjection() async => $initGetIt(_getIt);
 
   // Use this to get registered instance
-  static T resolve<T extends Object>({
-    dynamic param1,
-    dynamic param2,
-  }) =>
-      instance._getIt.get(
-        param1: param1,
-        param2: param2,
-      );
+  static T resolve<T extends Object>() => instance._getIt.get();
 }

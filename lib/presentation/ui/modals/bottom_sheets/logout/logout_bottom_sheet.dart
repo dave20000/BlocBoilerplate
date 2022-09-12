@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../../../../core/injector/di.dart';
 import '../../../../../core/router/app_router.dart';
 import '../../../../../core/utils/styles/ui_helper.dart';
+import '../../../../../domain/states/home/home_state.dart';
 import '../../../../cubits/home/home_cubit.dart';
 import '../../../hooks/is_dark_mode_hook.dart';
 import '../../../widgets/buttons/primary_button.dart';
@@ -55,12 +56,15 @@ class LogoutBottomSheet extends HookWidget {
             ),
           ),
           UIHelper.verticalSpaceMedium,
-          PrimaryButton(
-            onPressed: () async {
-              DI.resolve<AppRouter>().pop();
-              context.read<HomeCubit>().logout();
-            },
-            text: "Logout",
+          BlocBuilder<HomeCubit, HomeState>(
+            bloc: DI.resolve<HomeCubit>(),
+            builder: (context, state) => PrimaryButton(
+              onPressed: () async {
+                DI.resolve<AppRouter>().pop();
+                context.read<HomeCubit>().logout();
+              },
+              text: "Logout",
+            ),
           ),
           UIHelper.verticalSpaceMedium,
           SecondaryOutlinedButton(

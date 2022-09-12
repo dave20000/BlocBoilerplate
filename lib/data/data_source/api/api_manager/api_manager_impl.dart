@@ -18,7 +18,7 @@ import 'api_manager.dart';
 
 typedef HttpLibraryMethod<T> = Future<ApiResponse<T>> Function();
 
-@Injectable(as: ApiManager)
+@Singleton(as: ApiManager)
 class ApiManagerImpl extends ApiManager {
   final LoggerService _loggerService;
   final SecureStorageManager _secureStorageManager;
