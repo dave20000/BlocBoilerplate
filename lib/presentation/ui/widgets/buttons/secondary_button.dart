@@ -43,9 +43,9 @@ class SecondaryButton extends HookWidget {
             vertical: verticalPadding,
             horizontal: horizontalPadding,
           ),
-          backgroundColor: Colors.transparent,
+          primary: Colors.transparent,
           shadowColor: Colors.transparent,
-          foregroundColor:
+          onPrimary:
               isDark ? UIColors.secondaryColor : UIColors.secondaryColorDark,
           elevation: 3,
           shape: RoundedRectangleBorder(

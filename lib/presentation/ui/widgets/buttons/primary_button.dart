@@ -44,7 +44,7 @@ class PrimaryButton extends HookWidget {
             vertical: verticalPadding,
             horizontal: horizontalPadding,
           ),
-          backgroundColor: Colors.transparent,
+          primary: Colors.transparent,
           shadowColor: Colors.transparent,
           elevation: 3,
           shape: RoundedRectangleBorder(

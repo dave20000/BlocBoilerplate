@@ -8,6 +8,7 @@ import '../../../core/router/app_router.dart';
 import '../../../core/utils/l10n/app_loc.dart';
 import '../../core/injector/di.dart';
 import '../../domain/states/core/theme/theme_state.dart';
+import '../../flavors.dart';
 import '../cubits/core/app_cubit.dart';
 import '../cubits/core/theme_cubit.dart';
 import '../cubits/core/user_cubit.dart';
@@ -41,6 +42,7 @@ class App extends StatelessWidget {
             splitScreenMode: true,
             builder: (context, child) {
               return MaterialApp.router(
+                title: F.title,
                 routeInformationParser: appRouter.defaultRouteParser(),
                 routerDelegate: appRouter.delegate(
                   navigatorObservers: () => [
@@ -50,7 +52,6 @@ class App extends StatelessWidget {
                 // locale: localLanguage,
                 supportedLocales: AppLoc.supportedLocale,
                 localizationsDelegates: AppLoc.delegates,
-                title: "Boilerplate Bloc",
                 debugShowCheckedModeBanner: false,
                 themeMode: context.watch<ThemeCubit>().state.mode,
                 theme: context.read<ThemeCubit>().lightThemeData,
