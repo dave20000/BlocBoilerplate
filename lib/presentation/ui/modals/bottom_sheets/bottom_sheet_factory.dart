@@ -9,6 +9,22 @@ import 'close_button_bottom_sheet.dart';
 abstract class BottomSheetFactory {
   const BottomSheetFactory._();
 
+  static void show(
+    BuildContext context, {
+    required Widget child,
+  }) {
+    showCustomModalBottomSheet(
+      context: context,
+      builder: (context) => child,
+      containerWidget: (_, animation, child) => CloseButtonBottomSheet(
+        animation: animation,
+        child: Wrap(
+          children: [Material(child: child)],
+        ),
+      ),
+    );
+  }
+
   //? for all non draggable bottom sheet use this
   static Route<T> modalSheetBuilder<T>(
     BuildContext context,

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -5,14 +6,21 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import '../../../../../core/injector/di.dart';
 import '../../../../../core/router/app_router.dart';
 import '../../../../../core/utils/styles/ui_helper.dart';
-import '../../../../../domain/states/home/home_state.dart';
 import '../../../../cubits/home/home_cubit.dart';
 import '../../../hooks/is_dark_mode_hook.dart';
 import '../../../widgets/buttons/primary_button.dart';
 import '../../../widgets/buttons/secondary_outlined_button.dart';
 
-class LogoutBottomSheet extends HookWidget {
+class LogoutBottomSheet extends HookWidget implements AutoRouteWrapper {
   const LogoutBottomSheet({super.key});
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(
+      create: (context) => DI.resolve<HomeCubit>(),
+      child: this,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,15 +64,12 @@ class LogoutBottomSheet extends HookWidget {
             ),
           ),
           UIHelper.verticalSpaceMedium,
-          BlocBuilder<HomeCubit, HomeState>(
-            bloc: DI.resolve<HomeCubit>(),
-            builder: (context, state) => PrimaryButton(
-              onPressed: () async {
-                DI.resolve<AppRouter>().pop();
-                context.read<HomeCubit>().logout();
-              },
-              text: "Logout",
-            ),
+          PrimaryButton(
+            onPressed: () async {
+              DI.resolve<AppRouter>().pop();
+              context.read<HomeCubit>().logout();
+            },
+            text: "Logout",
           ),
           UIHelper.verticalSpaceMedium,
           SecondaryOutlinedButton(

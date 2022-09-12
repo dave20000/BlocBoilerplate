@@ -31,18 +31,22 @@ class LoginCubit extends Cubit<LoginState> {
     required bool isSignInButton,
   }) async {
     emit(LoginState.loading(accountType));
-    emit(await _loginUserUseCase(accountType));
-    await state.maybeWhen(
+    final dataState = await _loginUserUseCase(accountType);
+    await dataState.when(
       success: (user) async {
+        emit(LoginState.success(user));
         await _appCubit.authenticateState(user);
         _loggerService.logInfo(
           "login with $accountType account",
           className: "Login",
         );
       },
-      orElse: () => Fluttertoast.showToast(
-        msg: "Unable to login, try again",
-      ),
+      error: (ex) {
+        emit(LoginState.error(ex.msg));
+        Fluttertoast.showToast(
+          msg: "Unable to login, try again $ex",
+        );
+      },
     );
   }
 }

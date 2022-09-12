@@ -1,6 +1,7 @@
+import 'package:boilerplate_bloc/core/utils/errors/app_exception.dart';
+import 'package:boilerplate_bloc/data/models/result/data_state.dart';
 import 'package:boilerplate_bloc/domain/enums/account_type.dart';
 import 'package:boilerplate_bloc/domain/models/user/user.dart';
-import 'package:boilerplate_bloc/domain/states/login/login_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -17,7 +18,7 @@ void main() {
     'should login user with google account',
     () async {
       const accountType = AccountType.google; //can be any account type
-      const loginState = LoginState.success(
+      const DataState<User> dataState = DataState.success(
         User(
           name: "any_name",
           accountType: accountType,
@@ -25,12 +26,12 @@ void main() {
       );
       // arrange
       when(mockAuthRepository.login(AccountType.google)).thenAnswer(
-        (_) async => loginState,
+        (_) async => dataState,
       );
       // act
       final result = await mockAuthRepository.login(accountType);
       // assert
-      expect(result, loginState);
+      expect(result, dataState);
       verify(mockAuthRepository.login(accountType));
       verifyNoMoreInteractions(mockAuthRepository);
     },
@@ -40,17 +41,17 @@ void main() {
     'should return login.error on login failure',
     () async {
       const accountType = AccountType.google; //can be any account type
-      const loginState = LoginState.error(
-        'Login failed',
+      const DataState<User> dataState = DataState.error(
+        AppException.unknownError('Login failed'),
       );
       // arrange
       when(mockAuthRepository.login(AccountType.google)).thenAnswer(
-        (_) async => loginState,
+        (_) async => dataState,
       );
       // act
       final result = await mockAuthRepository.login(accountType);
       // assert
-      expect(result, loginState);
+      expect(result, dataState);
       verify(mockAuthRepository.login(accountType));
       verifyNoMoreInteractions(mockAuthRepository);
     },

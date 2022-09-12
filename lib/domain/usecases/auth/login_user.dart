@@ -1,7 +1,7 @@
 part of 'auth_usecases.dart';
 
 @injectable
-class LoginUser extends UseCase<LoginState, AccountType> {
+class LoginUser extends UseCase<DataState<User>, AccountType> {
   final AuthRepository _authRepository;
 
   ///Login User Use Case
@@ -9,7 +9,7 @@ class LoginUser extends UseCase<LoginState, AccountType> {
 
   /// Callable class method
   @override
-  Future<LoginState> call(AccountType accountType) async {
+  Future<DataState<User>> call(AccountType accountType) async {
     return _authRepository.login(accountType);
   }
 }
