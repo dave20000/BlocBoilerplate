@@ -1,7 +1,7 @@
 {
     "configurations": [{
             "name": "Flutter Dev",
-            "program": "lib/main_dev.dart",
+            "program": "lib/main/main_dev.dart",
             "request": "launch",
             "flutterMode": "debug",
             "type": "dart",
@@ -12,7 +12,7 @@
         },
         {
             "name": "Flutter Staging",
-            "program": "lib/main_staging.dart",
+            "program": "lib/main/main_staging.dart",
             "request": "launch",
             "flutterMode": "profile",
             "type": "dart",
@@ -23,7 +23,7 @@
         },
         {
             "name": "Flutter Prod",
-            "program": "lib/main_prod.dart",
+            "program": "lib/main/main_prod.dart",
             "request": "launch",
             "flutterMode": "release",
             "type": "dart",

@@ -35,7 +35,7 @@ class AuthRepositoryImpl implements AuthRepository {
         accessTokenState = await _signInWithGoogle();
         break;
       case AccountType.guest:
-        return guestLogin("Guest User");
+        return _userRepository.createUser("local_token", accountType);
       default:
         break;
     }
@@ -46,10 +46,6 @@ class AuthRepositoryImpl implements AuthRepository {
             error: (ex) => DataState.error(AppException.unknownError(ex.msg)),
           );
   }
-
-  @override
-  Future<DataState<User>> guestLogin(String name) async =>
-      _userRepository.createGuestUser(name);
 
   @override
   Future<void> logout(AccountType accountType) async {

@@ -5,7 +5,6 @@ import '../models/user/user.dart';
 abstract class UserRepository {
   Future<DataState<User>> readUser();
   Future<DataState<User>> createUser(String token, AccountType accountType);
-  Future<DataState<User>> createGuestUser(String name);
   Future<bool> updateUser(User user);
   Future<void> removeUser();
 }

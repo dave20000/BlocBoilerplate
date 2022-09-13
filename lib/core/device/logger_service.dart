@@ -20,6 +20,7 @@ class LoggerService {
     );
   }
 
+  //TODO: check why it does not print in console
   void logDebug(String text, {String? className, String? methodName}) {
     FLog.debug(className: className, methodName: methodName, text: text);
   }

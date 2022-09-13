@@ -50,13 +50,6 @@ class MockAuthRepository extends _i1.Mock implements _i3.AuthRepository {
       Invocation.method(#logout, [accountType]),
       returnValue: _i4.Future<void>.value(),
       returnValueForMissingStub: _i4.Future<void>.value()) as _i4.Future<void>);
-  @override
-  _i4.Future<_i2.DataState<_i5.User>> guestLogin(String? name) =>
-      (super.noSuchMethod(Invocation.method(#guestLogin, [name]),
-              returnValue: _i4.Future<_i2.DataState<_i5.User>>.value(
-                  _FakeDataState_0<_i5.User>(
-                      this, Invocation.method(#guestLogin, [name]))))
-          as _i4.Future<_i2.DataState<_i5.User>>);
 }
 
 /// A class which mocks [UserRepository].
@@ -81,13 +74,6 @@ class MockUserRepository extends _i1.Mock implements _i7.UserRepository {
               returnValue: _i4.Future<_i2.DataState<_i5.User>>.value(
                   _FakeDataState_0<_i5.User>(this,
                       Invocation.method(#createUser, [token, accountType]))))
-          as _i4.Future<_i2.DataState<_i5.User>>);
-  @override
-  _i4.Future<_i2.DataState<_i5.User>> createGuestUser(String? name) =>
-      (super.noSuchMethod(Invocation.method(#createGuestUser, [name]),
-              returnValue: _i4.Future<_i2.DataState<_i5.User>>.value(
-                  _FakeDataState_0<_i5.User>(
-                      this, Invocation.method(#createGuestUser, [name]))))
           as _i4.Future<_i2.DataState<_i5.User>>);
   @override
   _i4.Future<bool> updateUser(_i5.User? user) =>

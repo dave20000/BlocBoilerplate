@@ -23,7 +23,7 @@ class ApiClient {
   }) async {
     if (await ConnectivityService.hasConnection()) {
       final apiResponse = await _apiManager.getAsync<Dto>(
-        baseUrl: baseUrl,
+        newBaseUrl: baseUrl,
         endpoint: endpoint,
         queryParams: queryParams,
         headers: headers,
@@ -48,7 +48,7 @@ class ApiClient {
   }) async {
     if (await ConnectivityService.hasConnection()) {
       final apiResponse = await _apiManager.getAsyncList<Dto>(
-        baseUrl: baseUrl,
+        newBaseUrl: baseUrl,
         endpoint: endpoint,
         queryParams: queryParams,
         headers: headers,
@@ -76,7 +76,7 @@ class ApiClient {
   }) async {
     if (await ConnectivityService.hasConnection()) {
       final apiResponse = await _apiManager.postAsync<Dto>(
-        baseUrl: baseUrl,
+        newBaseUrl: baseUrl,
         endpoint: endpoint,
         data: data.toApiDto().toJson(),
         queryParams: queryParams,
@@ -103,7 +103,7 @@ class ApiClient {
   }) async {
     if (await ConnectivityService.hasConnection()) {
       final apiResponse = await _apiManager.postAsync<Dto>(
-        baseUrl: baseUrl,
+        newBaseUrl: baseUrl,
         endpoint: endpoint,
         data: dataList.map((post) => post.toApiDto().toJson()).toList(),
         queryParams: queryParams,
@@ -130,7 +130,7 @@ class ApiClient {
   }) async {
     if (await ConnectivityService.hasConnection()) {
       final apiResponse = await _apiManager.putAsync<Dto>(
-        baseUrl: baseUrl,
+        newBaseUrl: baseUrl,
         endpoint: endpoint,
         // serializer: serializer,
         data: updatedData.toApiDto().toJson(),
@@ -157,7 +157,7 @@ class ApiClient {
   }) async {
     if (await ConnectivityService.hasConnection()) {
       final apiResponse = await _apiManager.deleteAsync<Dto>(
-        baseUrl: baseUrl,
+        newBaseUrl: baseUrl,
         endpoint: endpoint,
         queryParams: queryParams,
         headers: headers,

@@ -9,7 +9,7 @@ import '../../../core/utils/l10n/app_loc.dart';
 import '../../core/injector/di.dart';
 import '../../domain/states/core/app/app_state.dart';
 import '../../domain/states/core/theme/theme_state.dart';
-import '../../flavors.dart';
+import '../../main/flavors.dart';
 import '../cubits/core/app_cubit.dart';
 import '../cubits/core/theme_cubit.dart';
 import '../cubits/core/user_cubit.dart';

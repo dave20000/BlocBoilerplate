@@ -5,5 +5,4 @@ import '../models/user/user.dart';
 abstract class AuthRepository {
   Future<DataState<User>> login(AccountType accountType);
   Future<void> logout(AccountType accountType);
-  Future<DataState<User>> guestLogin(String name);
 }

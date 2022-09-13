@@ -9,26 +9,36 @@ class CubitObserverLog extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
-    _loggerService.logDebug("On Event: $event");
+    _loggerService.logInfo("On Event: $event", className: "", methodName: "");
   }
 
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    _loggerService.logDebug("On Change: ${bloc.runtimeType} $change");
+    _loggerService.logInfo(
+      "On Change: ${bloc.runtimeType} $change",
+      className: "",
+      methodName: "",
+    );
   }
 
   @override
   void onCreate(BlocBase bloc) {
     super.onCreate(bloc);
-    _loggerService.logDebug("On Create: ${bloc.runtimeType}");
+    _loggerService.logInfo(
+      "On Create: ${bloc.runtimeType}",
+      className: "",
+      methodName: "",
+    );
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    _loggerService.logDebug(
+    _loggerService.logInfo(
       "On ${bloc.runtimeType} Transition from : ${transition.currentState}\nEvent: ${transition.event}\nTransition To: ${transition.nextState}",
+      className: "",
+      methodName: "",
     );
   }
 

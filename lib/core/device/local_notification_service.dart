@@ -47,7 +47,7 @@ class NotificationService {
     );
 
     onSelectedNotifications.stream.listen((payload) {
-      _loggerService.logDebug(payload ?? "null");
+      _loggerService.logInfo(payload ?? "null");
       appRouter.push(const AppStartRoute());
     });
   }

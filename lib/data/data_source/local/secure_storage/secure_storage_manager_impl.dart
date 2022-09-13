@@ -1,16 +1,19 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/device/logger_service.dart';
 import 'secure_storage_manager.dart';
 
 @Singleton(as: SecureStorageManager)
 class SecureStorageManagerImpl implements SecureStorageManager {
   late final FlutterSecureStorage _secureStorage;
 
+  final LoggerService _loggerService;
+
   // final _androidOptions =
   //     const AndroidOptions(encryptedSharedPreferences: true);
 
-  SecureStorageManagerImpl() {
+  SecureStorageManagerImpl(this._loggerService) {
     _secureStorage = const FlutterSecureStorage(
         // aOptions: _androidOptions,
         );
@@ -23,7 +26,9 @@ class SecureStorageManagerImpl implements SecureStorageManager {
         key: key,
         // aOptions: _androidOptions,
       );
-    } catch (ex) {
+    } catch (ex, s) {
+      _loggerService.logException(ex, s);
+
       return null;
     }
   }
@@ -40,23 +45,33 @@ class SecureStorageManagerImpl implements SecureStorageManager {
         // aOptions: _androidOptions,
       );
       return true;
-    } catch (ex) {
+    } catch (ex, s) {
+      _loggerService.logException(ex, s);
+
       return false;
     }
   }
 
   @override
   Future<void> deleteAsync({required String key}) async {
-    await _secureStorage.delete(
-      key: key,
-      // aOptions: _androidOptions,
-    );
+    try {
+      await _secureStorage.delete(
+        key: key,
+        // aOptions: _androidOptions,
+      );
+    } catch (ex, s) {
+      _loggerService.logException(ex, s);
+    }
   }
 
   @override
   Future<void> clear() async {
-    await _secureStorage.deleteAll(
-        // aOptions: _androidOptions,
-        );
+    try {
+      await _secureStorage.deleteAll(
+          // aOptions: _androidOptions,
+          );
+    } catch (ex, s) {
+      _loggerService.logException(ex, s);
+    }
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:injectable/injectable.dart';
 
 import '../../core/configs/constants/app_constants.dart';
@@ -11,6 +9,8 @@ import '../../domain/repositories/user_repository.dart';
 import '../data_source/api/api_manager/api_manager.dart';
 import '../data_source/local/cache/cache_manager.dart';
 import '../data_source/local/secure_storage/secure_storage_manager.dart';
+import '../models/api/user/user_api_dto.dart';
+import '../models/cache/user/user_cache_dto.dart';
 import '../models/result/data_state.dart';
 
 @Injectable(as: UserRepository)
@@ -18,7 +18,6 @@ class UserRepositoryImpl implements UserRepository {
   // ignore: unused_field
   final ApiManager _apiManager;
   final SecureStorageManager _secureStorageManager;
-  // ignore: unused_field
   final CacheManager _cacheManager;
 
   UserRepositoryImpl(
@@ -26,25 +25,6 @@ class UserRepositoryImpl implements UserRepository {
     this._secureStorageManager,
     this._cacheManager,
   );
-
-  @override
-  Future<DataState<User>> createGuestUser(String name) async {
-    final user = User(
-      name: name,
-      accountType: AccountType.guest,
-    );
-    final bool isUserStoredLocally = await _secureStorageManager.putAsync(
-      key: AppConstants.userKey,
-      value: jsonEncode(user.toJson()),
-    );
-    if (isUserStoredLocally) {
-      return DataState.success(user);
-    } else {
-      return const DataState.error(
-        AppException.cacheError(CacheException.insertError()),
-      );
-    }
-  }
 
   @override
   Future<DataState<User>> createUser(
@@ -56,16 +36,18 @@ class UserRepositoryImpl implements UserRepository {
       value: token,
     );
     if (isTokenStored) {
-      final user = User(
-        name: "any_name",
-        accountType: accountType,
+      const userApiDto = UserApiDto(
+        id: "0",
+        name: "Jon Snow",
+        accountType: AccountType.guest,
       );
-      final bool isUserStoredLocally = await _secureStorageManager.putAsync(
-        key: AppConstants.userKey,
-        value: jsonEncode(user.toJson()),
+      final userCacheDto = userApiDto.toCacheDto();
+      final isUserAdded = await _cacheManager.insertData<UserCacheDto>(
+        UserCacheDto.boxKey,
+        userCacheDto,
       );
-      if (isUserStoredLocally) {
-        return DataState.success(user);
+      if (isUserAdded) {
+        return DataState.success(userCacheDto.toModel());
       } else {
         return const DataState.error(
           AppException.cacheError(CacheException.insertError()),
@@ -80,23 +62,20 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<DataState<User>> readUser() async {
-    final val = await _secureStorageManager.getAsync(
-      key: AppConstants.userKey,
-    );
-    return val == null
+    final usersCacheDto =
+        await _cacheManager.getAll<UserCacheDto>(UserCacheDto.boxKey);
+    return usersCacheDto == null || usersCacheDto.isEmpty
         ? const DataState.error(
             AppException.cacheError(CacheException.insertError()),
           )
         : DataState.success(
-            User.fromJson(jsonDecode(val) as Map<String, dynamic>),
+            usersCacheDto.first.toModel(),
           );
   }
 
   @override
   Future<void> removeUser() async {
-    await _secureStorageManager.deleteAsync(
-      key: AppConstants.userKey,
-    );
+    await _cacheManager.clearAll<UserCacheDto>(UserCacheDto.boxKey);
     await _secureStorageManager.deleteAsync(
       key: AppConstants.tokenKey,
     );
