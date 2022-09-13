@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
@@ -8,20 +7,25 @@ import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import 'logger_service.dart';
 import 'permission_service.dart';
 
 @injectable
 class FilePickerService {
   final ImagePicker _picker = ImagePicker();
 
-  final PermissionService permissionService;
-  FilePickerService(this.permissionService);
+  final PermissionService _permissionService;
+  final LoggerService _loggerService;
+  FilePickerService(
+    this._permissionService,
+    this._loggerService,
+  );
 
   Future<XFile?> pickImageFromGallery() async {
     try {
       return _picker.pickImage(source: ImageSource.gallery);
-    } catch (e) {
-      log("Error : ${e.toString()}", error: e);
+    } catch (ex, s) {
+      _loggerService.logException(ex, s);
       return null;
     }
   }
@@ -29,8 +33,8 @@ class FilePickerService {
   Future<XFile?> pickImageFromCamera() async {
     try {
       return _picker.pickImage(source: ImageSource.camera);
-    } catch (e) {
-      log("Error : ${e.toString()}", error: e);
+    } catch (ex, s) {
+      _loggerService.logException(ex, s);
       return null;
     }
   }
@@ -39,8 +43,8 @@ class FilePickerService {
     try {
       final FilePickerResult? result = await FilePicker.platform.pickFiles();
       return result;
-    } catch (e) {
-      log("Error : ${e.toString()}", error: e);
+    } catch (ex, s) {
+      _loggerService.logException(ex, s);
       return null;
     }
   }
@@ -50,8 +54,8 @@ class FilePickerService {
       final FilePickerResult? result =
           await FilePicker.platform.pickFiles(allowMultiple: true);
       return result;
-    } catch (e) {
-      log("Error : ${e.toString()}", error: e);
+    } catch (ex, s) {
+      _loggerService.logException(ex, s);
       return null;
     }
   }
@@ -66,13 +70,13 @@ class FilePickerService {
       final image = File('${directory.path}/$imageName.png');
       image.writeAsBytesSync(bytes);
       await Share.shareFiles([image.path], text: shareText);
-    } catch (e) {
-      log("Error : ${e.toString()}", error: e);
+    } catch (ex, s) {
+      _loggerService.logException(ex, s);
     }
   }
 
   Future<dynamic> saveImageToGallery(Uint8List bytes, String imageName) async {
-    if (await permissionService.storagePermission()) {
+    if (await _permissionService.storagePermission()) {
       try {
         final result = await ImageGallerySaver.saveImage(
           bytes,
@@ -80,8 +84,8 @@ class FilePickerService {
           isReturnImagePathOfIOS: true,
         );
         return result;
-      } catch (e) {
-        log("Error : ${e.toString()}", error: e);
+      } catch (ex, s) {
+        _loggerService.logException(ex, s);
       }
     }
   }

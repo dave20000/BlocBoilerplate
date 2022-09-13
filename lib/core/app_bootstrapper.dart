@@ -1,10 +1,10 @@
-import 'dart:developer';
 import 'dart:io';
 
 import '../data/data_source/local/cache/cache_manager_impl.dart';
 import '../data/data_source/local/db/hive_db.dart';
 import 'configs/http_config.dart';
 import 'device/background_service.dart';
+import 'device/logger_service.dart';
 import 'injector/di.dart';
 
 class AppBootStrapper {
@@ -15,8 +15,8 @@ class AppBootStrapper {
       HttpOverrides.global = MyHttpOverrides();
       await CacheManagerImpl.init();
       await HiveDb.initialize();
-    } catch (e) {
-      log("Error : ${e.toString()}", error: e);
+    } catch (ex, s) {
+      DI.resolve<LoggerService>().logException(ex, s);
     }
   }
 }

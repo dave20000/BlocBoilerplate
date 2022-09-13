@@ -1,9 +1,11 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../injector/di.dart';
+import 'logger_service.dart';
 
 @injectable
 class DeepLinkService {
@@ -84,10 +86,8 @@ class DeepLinkService {
           },
         );
       }
-    } catch (exception) {
-      if (kDebugMode) {
-        print(exception);
-      }
+    } catch (ex, s) {
+      DI.resolve<LoggerService>().logException(ex, s);
     }
   }
 }

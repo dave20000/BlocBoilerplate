@@ -2,13 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../../../core/configs/constants/db_constants.dart';
+import '../../../../core/device/logger_service.dart';
+import '../../../../core/injector/di.dart';
 
 @Singleton()
 class SQLiteDb {
@@ -42,10 +43,8 @@ class SQLiteDb {
   Future _onCreate(Database db, int version) async {
     try {
       await db.execute(UserDB.tableCreationQuery);
-    } catch (exception) {
-      if (kDebugMode) {
-        print(exception);
-      }
+    } catch (ex, s) {
+      DI.resolve<LoggerService>().logException(ex, s);
     }
   }
 

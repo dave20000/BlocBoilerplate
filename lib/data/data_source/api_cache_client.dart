@@ -1,9 +1,9 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../core/device/connectivity_service.dart';
+import '../../core/device/logger_service.dart';
+import '../../core/injector/di.dart';
 import '../../core/utils/errors/app_exception.dart';
 import '../../core/utils/errors/cache_exception.dart';
 import '../mappers/api_dto.dart';
@@ -65,7 +65,7 @@ class ApiCacheClient {
         },
       );
     } else {
-      log("Cache hit");
+      DI.resolve<LoggerService>().logInfo("Cache hit");
 
       final cachedData = await _cachingManager.getData<HiveDto>(
         boxKey,
@@ -130,7 +130,7 @@ class ApiCacheClient {
         },
       );
     } else {
-      log("Cache hit");
+      DI.resolve<LoggerService>().logInfo("Cache hit");
 
       final hasCachedData = await _cachingManager.hasData<HiveDto>(boxKey);
       final cachedDataList = await _cachingManager.getAll<HiveDto>(boxKey);

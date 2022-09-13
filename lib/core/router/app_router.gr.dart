@@ -19,12 +19,13 @@ class _$AppRouter extends RootStackRouter {
   final Map<String, PageFactory> pagesMap = {
     AppStartRoute.name: (routeData) {
       return AdaptivePage<dynamic>(
-          routeData: routeData, child: const AppStartScreen());
+          routeData: routeData,
+          child: WrappedRoute(child: const AppStartScreen()));
     },
     LogoutBottomSheetRoute.name: (routeData) {
       return CustomPage<dynamic>(
           routeData: routeData,
-          child: const LogoutBottomSheet(),
+          child: WrappedRoute(child: const LogoutBottomSheet()),
           customRouteBuilder: BottomSheetFactory.modalSheetBuilder,
           opaque: true,
           barrierDismissible: false);

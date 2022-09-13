@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:injectable/injectable.dart';
@@ -7,16 +6,18 @@ import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 import '../router/app_router.dart';
+import 'logger_service.dart';
 
 @injectable
 class NotificationService {
   static final _notifications = FlutterLocalNotificationsPlugin();
   static final onSelectedNotifications = BehaviorSubject<String?>();
 
+  final LoggerService _loggerService;
+  NotificationService(this._loggerService);
+
   Future<void> initialize(AppRouter appRouter) async {
-    if (kDebugMode) {
-      print('INITIALIZING LOCAL NOTIFICATIONS');
-    }
+    _loggerService.logInfo('INITIALIZING LOCAL NOTIFICATIONS');
 
     final String locationName = await FlutterNativeTimezone.getLocalTimezone();
     tz.initializeTimeZones();
@@ -46,9 +47,7 @@ class NotificationService {
     );
 
     onSelectedNotifications.stream.listen((payload) {
-      if (kDebugMode) {
-        print(payload);
-      }
+      _loggerService.logDebug(payload ?? "null");
       appRouter.push(const AppStartRoute());
     });
   }
