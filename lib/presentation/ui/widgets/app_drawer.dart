@@ -9,6 +9,7 @@ import '../../../core/utils/styles/colors.dart';
 import '../../../domain/states/core/theme/theme_state.dart';
 import '../../cubits/core/theme_cubit.dart';
 import '../../cubits/core/user_cubit.dart';
+import '../../cubits/home/home_cubit.dart';
 import '../hooks/app_loc_hook.dart';
 import '../hooks/is_dark_mode_hook.dart';
 
@@ -83,9 +84,13 @@ class AppDrawer extends HookWidget {
               Padding(
                 padding: const EdgeInsets.all(16.0).r,
                 child: ElevatedButton(
-                  onPressed: () => DI
-                      .resolve<AppRouter>()
-                      .popAndPush(const LogoutBottomSheetRoute()),
+                  onPressed: () => DI.resolve<AppRouter>().popAndPush(
+                        LogoutBottomSheetRoute(
+                          homeCubit: context.read<HomeCubit>(),
+                          accountType:
+                              context.read<UserCubit>().state.user!.accountType,
+                        ),
+                      ),
                   child: const Text("Logout"),
                 ),
               ),

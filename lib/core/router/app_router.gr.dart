@@ -23,9 +23,11 @@ class _$AppRouter extends RootStackRouter {
           child: WrappedRoute(child: const AppStartScreen()));
     },
     LogoutBottomSheetRoute.name: (routeData) {
+      final args = routeData.argsAs<LogoutBottomSheetRouteArgs>();
       return CustomPage<dynamic>(
           routeData: routeData,
-          child: WrappedRoute(child: const LogoutBottomSheet()),
+          child: LogoutBottomSheet(args.homeCubit, args.accountType,
+              key: args.key),
           customRouteBuilder: BottomSheetFactory.modalSheetBuilder,
           opaque: true,
           barrierDismissible: false);
@@ -50,9 +52,31 @@ class AppStartRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [LogoutBottomSheet]
-class LogoutBottomSheetRoute extends PageRouteInfo<void> {
-  const LogoutBottomSheetRoute()
-      : super(LogoutBottomSheetRoute.name, path: '/logout-bottom-sheet');
+class LogoutBottomSheetRoute extends PageRouteInfo<LogoutBottomSheetRouteArgs> {
+  LogoutBottomSheetRoute(
+      {required HomeCubit homeCubit,
+      required AccountType accountType,
+      Key? key})
+      : super(LogoutBottomSheetRoute.name,
+            path: '/logout-bottom-sheet',
+            args: LogoutBottomSheetRouteArgs(
+                homeCubit: homeCubit, accountType: accountType, key: key));
 
   static const String name = 'LogoutBottomSheetRoute';
+}
+
+class LogoutBottomSheetRouteArgs {
+  const LogoutBottomSheetRouteArgs(
+      {required this.homeCubit, required this.accountType, this.key});
+
+  final HomeCubit homeCubit;
+
+  final AccountType accountType;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'LogoutBottomSheetRouteArgs{homeCubit: $homeCubit, accountType: $accountType, key: $key}';
+  }
 }

@@ -1,26 +1,19 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../../../core/injector/di.dart';
 import '../../../../../core/router/app_router.dart';
 import '../../../../../core/utils/styles/ui_helper.dart';
+import '../../../../../domain/enums/account_type.dart';
 import '../../../../cubits/home/home_cubit.dart';
 import '../../../hooks/is_dark_mode_hook.dart';
 import '../../../widgets/buttons/primary_button.dart';
 import '../../../widgets/buttons/secondary_outlined_button.dart';
 
-class LogoutBottomSheet extends HookWidget implements AutoRouteWrapper {
-  const LogoutBottomSheet({super.key});
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (context) => DI.resolve<HomeCubit>(),
-      child: this,
-    );
-  }
+class LogoutBottomSheet extends HookWidget {
+  final HomeCubit homeCubit;
+  final AccountType accountType;
+  const LogoutBottomSheet(this.homeCubit, this.accountType, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +59,8 @@ class LogoutBottomSheet extends HookWidget implements AutoRouteWrapper {
           UIHelper.verticalSpaceMedium,
           PrimaryButton(
             onPressed: () async {
-              DI.resolve<AppRouter>().pop();
-              context.read<HomeCubit>().logout();
+              await DI.resolve<AppRouter>().pop();
+              homeCubit.logout(accountType);
             },
             text: "Logout",
           ),

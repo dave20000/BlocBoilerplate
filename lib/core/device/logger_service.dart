@@ -1,6 +1,4 @@
-import 'package:f_logs/constants/db_constants.dart';
-import 'package:f_logs/model/flog/flog.dart';
-import 'package:f_logs/model/flog/log.dart';
+import 'package:f_logs/f_logs.dart';
 import 'package:injectable/injectable.dart';
 import 'package:sembast/sembast.dart';
 
@@ -8,6 +6,12 @@ import '../configs/constants/app_constants.dart';
 
 @injectable
 class LoggerService {
+  LoggerService() {
+    FLog.applyConfigurations(
+      LogsConfig()..formatType = FormatType.FORMAT_CSV,
+    );
+  }
+
   void logException(dynamic e, StackTrace stackTrace) {
     FLog.error(
       text: AppConstants.exception,

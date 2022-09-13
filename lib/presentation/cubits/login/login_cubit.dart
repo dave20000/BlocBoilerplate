@@ -3,11 +3,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../core/device/logger_service.dart';
-import '../../../core/injector/di.dart';
 import '../../../domain/enums/account_type.dart';
 import '../../../domain/states/login/login_state.dart';
 import '../../../domain/usecases/auth/auth_usecases.dart';
-import '../core/app_cubit.dart';
 
 @injectable
 class LoginCubit extends Cubit<LoginState> {
@@ -15,7 +13,6 @@ class LoginCubit extends Cubit<LoginState> {
 
   final LoginUser _loginUserUseCase;
   final LoggerService _loggerService;
-  final AppCubit _appCubit = DI.resolve<AppCubit>();
 
   LoginCubit(
     this._loginUserUseCase,
@@ -35,7 +32,6 @@ class LoginCubit extends Cubit<LoginState> {
     await dataState.when(
       success: (user) async {
         emit(LoginState.success(user));
-        await _appCubit.authenticateState(user);
         _loggerService.logInfo(
           "login with $accountType account",
           className: "Login",
