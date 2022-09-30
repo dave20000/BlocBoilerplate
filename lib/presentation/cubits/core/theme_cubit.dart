@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../core/configs/app_theme.dart';
+import '../../../core/configs/theme/app_theme.dart';
 import '../../../domain/states/core/theme/theme_state.dart';
 import '../../../domain/usecases/storage/theme/theme_storage_usecases.dart';
 
@@ -29,6 +29,6 @@ class ThemeCubit extends Cubit<ThemeState> {
     emit(themeState);
   }
 
-  ThemeData get lightThemeData => AppTheme.lightTheme;
-  ThemeData get darkThemeData => AppTheme.darkTheme;
+  ThemeData get lightThemeData => AppTheme.light.theme;
+  ThemeData get darkThemeData => AppTheme.dark.theme;
 }

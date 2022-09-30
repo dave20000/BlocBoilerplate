@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/utils/styles/colors.dart';
-import '../../../../core/utils/styles/ui_helper.dart';
+import '../../../../core/utils/styles/colors/colors.dart';
+import '../../../../core/utils/styles/dimensions/ui_dimensions.dart';
 import '../../../../domain/enums/account_type.dart';
 import '../../../cubits/core/theme_cubit.dart';
 import '../../../cubits/login/login_cubit.dart';
@@ -27,7 +27,7 @@ class LoginScreen extends HookWidget {
         body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           decoration: BoxDecoration(
-            gradient: UIColors.eventBgGradients.first,
+            gradient: UIColors.primaryGradient,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +40,7 @@ class LoginScreen extends HookWidget {
                       fontSize: 28.sp,
                     ),
               ),
-              UIHelper.verticalSpace(64),
+              UIDimensions.verticalSpace(64),
               GoogleAuthButton(
                 onPressed: () async => context.read<LoginCubit>().logIn(
                       AccountType.google,
@@ -48,7 +48,7 @@ class LoginScreen extends HookWidget {
                     ),
                 themeMode: context.read<ThemeCubit>().state.mode,
               ),
-              UIHelper.verticalSpaceMedium,
+              UIDimensions.verticalSpaceMedium,
               FacebookAuthButton(
                 onPressed: () async => context.read<LoginCubit>().logIn(
                       AccountType.facebook,
@@ -56,7 +56,7 @@ class LoginScreen extends HookWidget {
                     ),
                 themeMode: context.read<ThemeCubit>().state.mode,
               ),
-              UIHelper.verticalSpaceMedium,
+              UIDimensions.verticalSpaceMedium,
               PrimaryButton(
                 onPressed: () async => context.read<LoginCubit>().logIn(
                       AccountType.guest,
@@ -98,7 +98,7 @@ class LoginScreen extends HookWidget {
                   ],
                 ),
               ),
-              UIHelper.verticalSpace(64),
+              UIDimensions.verticalSpace(64),
             ],
           ),
         ),

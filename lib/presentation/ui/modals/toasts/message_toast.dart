@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import '../../../../core/utils/styles/ui_helper.dart';
+import '../../../../core/utils/styles/dimensions/ui_dimensions.dart';
 import '../../../../domain/enums/toast_type.dart';
 import '../../hooks/is_dark_mode_hook.dart';
 
@@ -59,7 +59,7 @@ class MessageToast extends HookWidget {
                     //   width: 40,
                     //   height: 40,
                     // ),
-                    UIHelper.horizontalSpaceMedium,
+                    UIDimensions.horizontalSpaceMedium,
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

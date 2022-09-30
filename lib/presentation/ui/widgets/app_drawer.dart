@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/injector/di.dart';
 import '../../../core/router/app_router.dart';
-import '../../../core/utils/styles/colors.dart';
+import '../../../core/utils/styles/colors/colors.dart';
 import '../../../domain/states/core/theme/theme_state.dart';
 import '../../cubits/core/theme_cubit.dart';
 import '../../cubits/core/user_cubit.dart';
@@ -27,7 +27,7 @@ class AppDrawer extends HookWidget {
           return ListView(
             children: [
               UserAccountsDrawerHeader(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   gradient: UIColors.primaryGradient,
                 ),
                 accountName: Text(

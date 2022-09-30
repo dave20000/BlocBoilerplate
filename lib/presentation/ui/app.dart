@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/configs/router_log.dart';
 import '../../../core/device/logger_service.dart';
 import '../../../core/router/app_router.dart';
 import '../../../core/utils/l10n/app_loc.dart';
+import '../../core/configs/log/router_log.dart';
 import '../../core/injector/di.dart';
 import '../../domain/states/core/app/app_state.dart';
 import '../../domain/states/core/theme/theme_state.dart';

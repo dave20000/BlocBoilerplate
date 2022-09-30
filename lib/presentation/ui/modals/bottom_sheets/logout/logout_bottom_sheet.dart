@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../../../core/injector/di.dart';
 import '../../../../../core/router/app_router.dart';
-import '../../../../../core/utils/styles/ui_helper.dart';
+import '../../../../../core/utils/styles/dimensions/ui_dimensions.dart';
 import '../../../../../domain/enums/account_type.dart';
 import '../../../../cubits/home/home_cubit.dart';
 import '../../../hooks/is_dark_mode_hook.dart';
@@ -31,8 +31,8 @@ class LogoutBottomSheet extends HookWidget {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         children: [
-          UIHelper.verticalSpaceMedium,
-          UIHelper.verticalSpaceSmall,
+          UIDimensions.verticalSpaceMedium,
+          UIDimensions.verticalSpaceSmall,
           Center(
             child: Text(
               'Logout',
@@ -42,7 +42,7 @@ class LogoutBottomSheet extends HookWidget {
                   ),
             ),
           ),
-          UIHelper.verticalSpaceMedium,
+          UIDimensions.verticalSpaceMedium,
           Center(
             child: SizedBox(
               width: 193,
@@ -56,7 +56,7 @@ class LogoutBottomSheet extends HookWidget {
               ),
             ),
           ),
-          UIHelper.verticalSpaceMedium,
+          UIDimensions.verticalSpaceMedium,
           PrimaryButton(
             onPressed: () async {
               await DI.resolve<AppRouter>().pop();
@@ -64,12 +64,12 @@ class LogoutBottomSheet extends HookWidget {
             },
             text: "Logout",
           ),
-          UIHelper.verticalSpaceMedium,
+          UIDimensions.verticalSpaceMedium,
           SecondaryOutlinedButton(
             onPressed: () => DI.resolve<AppRouter>().pop(),
             text: "Cancel",
           ),
-          UIHelper.verticalSpaceMedium,
+          UIDimensions.verticalSpaceMedium,
         ],
       ),
     );

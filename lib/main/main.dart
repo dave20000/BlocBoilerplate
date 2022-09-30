@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 import '../core/app_bootstrapper.dart';
-import '../core/configs/cubit_observer_log.dart';
+import '../core/configs/log/cubit_observer_log.dart';
 import '../core/device/logger_service.dart';
 import '../core/injector/di.dart';
 import '../presentation/ui/app.dart';

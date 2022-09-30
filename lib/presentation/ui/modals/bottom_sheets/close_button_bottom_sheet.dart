@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../../core/injector/di.dart';
 import '../../../../core/router/app_router.dart';
-import '../../../../core/utils/styles/colors.dart';
+import '../../../../core/utils/styles/colors/colors.dart';
 import '../../hooks/is_dark_mode_hook.dart';
 
 class CloseButtonBottomSheet extends HookWidget {
@@ -63,8 +63,8 @@ class CloseButtonBottomSheet extends HookWidget {
                       },
                       style: ButtonStyle(
                         backgroundColor: isDarkMode
-                            ? UIColors.buttonColorDark
-                            : UIColors.buttonColorLight,
+                            ? UIColors.dark.button
+                            : UIColors.light.button,
                         shape: MaterialStateProperty.all(
                           const CircleBorder(),
                         ),

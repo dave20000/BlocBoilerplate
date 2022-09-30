@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../core/utils/styles/ui_helper.dart';
+import '../../../../core/utils/styles/dimensions/ui_dimensions.dart';
 
 class SecondaryOutlinedButton extends StatelessWidget {
   const SecondaryOutlinedButton({
@@ -49,7 +49,7 @@ class SecondaryOutlinedButton extends StatelessWidget {
                   width: 18.w,
                   color: Theme.of(context).colorScheme.secondary,
                 ),
-              UIHelper.horizontalSpaceSmall,
+              UIDimensions.horizontalSpaceSmall,
               Text(
                 text,
                 style: Theme.of(context).textTheme.headline6!.copyWith(
@@ -58,7 +58,7 @@ class SecondaryOutlinedButton extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
               ),
-              UIHelper.horizontalSpace(6),
+              UIDimensions.horizontalSpace(6),
               if (iconData != null)
                 Icon(
                   iconData,

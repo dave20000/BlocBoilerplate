@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 
-import '../device/logger_service.dart';
+import '../../device/logger_service.dart';
 
 class CubitObserverLog extends BlocObserver {
   final LoggerService _loggerService;
